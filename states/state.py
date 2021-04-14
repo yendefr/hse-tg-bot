@@ -5,3 +5,6 @@ class Auth(StatesGroup):
     name = State()
     email = State()
     password = State()
+
+class Insert(StatesGroup):
+    input = State()

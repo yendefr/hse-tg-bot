@@ -1,27 +1,29 @@
 import asyncio
 import asyncpg
 import logging
-from data.config import PG_HOST, PG_USER, PG_PASSWORD
-# PG_HOST, PG_USER, PG_PASSWORD = '192.168.99.100', 'postgres', 'yen1234'
+from data.config import PG_HOST, PG_DB, PG_USER, PG_PASSWORD
 
 logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
                     level=logging.INFO)
 
 async def create_db():
-    command = open('utils/db/create.sql', 'r').read()
+    create_db_command = open("create.sql", "r").read()
 
-    conn: asyncpg.Connection = await asyncpg.connect(
-                                                    user=PG_USER,
-                                                    host=PG_HOST,
+    logging.info("Подключение к базе...")
+    conn: asyncpg.Connection = await asyncpg.connect(user=PG_USER,
+                                                     password=PG_PASSWORD,
+                                                     host=PG_HOST,
+                                                     database=PG_DB,
                                                     )
-    await conn.execute(command)
+    await conn.execute(create_db_command)
     await conn.close()
-    logging.info("Table users created")
+    logging.info("Таблицы созданы")
 
 async def create_pool():
-    return await asyncpg.create_pool(
-                                    user=PG_USER,
-                                    host=PG_HOST,
+    return await asyncpg.create_pool(user=PG_USER,
+                                     password=PG_PASSWORD,
+                                     host=PG_HOST,
+                                     database=PG_DB,
                                     )
 
 

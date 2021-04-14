@@ -1,14 +1,14 @@
 import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from utils.db.create_db import create_db
+from utils.db.create_db import create_pool
 
-from data import config
+from data.config import BOT_TOKEN
 
-bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
+bot = Bot(token=BOT_TOKEN, parse_mode=types.ParseMode.MARKDOWN_V2)
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
 # Data Base
-# loop = asyncio.get_event_loop()
-# db = loop.run_until_complete(create_db())
+loop = asyncio.get_event_loop()
+db = loop.run_until_complete(create_pool())

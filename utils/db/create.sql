@@ -1,36 +1,26 @@
-create table if not exists students
+create table students
 (
-    chat_id   bigint            not null
-        constraint students_pk
-            primary key,
-    name      text,
-    surname   text,
-    email     text,
-    password  text,
-    group     text,
-    is_sick   boolean,
+    id serial primary key,
+    name text not null,
+    email text not null,
+    password text not null,
+    group_id text not null,
+    is_sick boolean default false
 );
 
-alter table students
-    owner to postgres;
-
-create unique index if not exists students_id_uindex
-    on students (id);
-
-
-create table if not exists teachers
+create table teachers
 (
-    chat_id   bigint            not null
-        constraint teachers_pk
-            primary key,
-    name      text,
-    surname   text,
-    email     text,
-    password  text,
+    id serial primary key,
+    name text not null,
+    email text not null,
+    password text not null
 );
 
-alter table teachers
-    owner to postgres;
-
-create unique index if not exists teachers_id_uindex
-    on teachers (id);
+create table schedule
+(
+    teacher_id integer,
+    class text not null,
+    time text not null,
+    subject text not null,
+    group_id text not null
+);

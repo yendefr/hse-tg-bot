@@ -13,10 +13,15 @@ role_menu = ReplyKeyboardMarkup(
 menu = ReplyKeyboardMarkup(
     keyboard = [
         [
-            KeyboardButton(text='Получить расписание'),
-        ],
-        [
             KeyboardButton(text='Указать статус'),
+        ],
+    ],
+    resize_keyboard=True,
+)
+teacher_menu = ReplyKeyboardMarkup(
+    keyboard = [
+        [
+            KeyboardButton(text='Получить расписание'),
         ],
     ],
     resize_keyboard=True,

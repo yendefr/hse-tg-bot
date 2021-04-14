@@ -1,0 +1,1 @@
+from .config import PG_HOST, PG_DB, PG_USER, PG_PASSWORD
