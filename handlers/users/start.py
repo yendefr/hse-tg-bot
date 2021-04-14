@@ -1,7 +1,7 @@
-from aiogram.types import Message, ContentTypes, ReplyKeyboardRemove, User
+from aiogram.types import Message, ReplyKeyboardRemove, User
 from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters import Command, Text, state
 from aiogram.dispatcher.filters.builtin import CommandStart
+from aiogram.types.message import ContentType
 from keyboards.default import menu, role_menu, teacher_menu
 from handlers.users.menu import *
 from states.state import Auth
@@ -10,14 +10,6 @@ from utils.db.db import DB
 from loader import dp
 
 db = DB()
-
-@dp.message_handler(Command('info'))
-async def get_info(message: Message, state: FSMContext):
-    data = await state.get_data()
-    role = data.get('role')
-    name = data.get('name')
-    email = data.get('email')
-    await message.answer(role+' '+name+' '+email)
 
 @dp.message_handler(CommandStart(), state=None)
 async def req_role(message: Message):

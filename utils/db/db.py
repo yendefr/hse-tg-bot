@@ -1,4 +1,3 @@
-from aiogram import types
 from asyncpg import Connection, Record
 from asyncpg.exceptions import UniqueViolationError
 from loader import db
