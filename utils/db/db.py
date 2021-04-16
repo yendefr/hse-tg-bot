@@ -24,6 +24,8 @@ class DB():
     GET_SCHEDULE = "SELECT * FROM schedule WHERE teacher_id = $1"
     GET_TEACHER_ID_BY_NAME = "SELECT id FROM teachers WHERE name = $1"
     GET_SICKED = "SELECT name FROM students WHERE is_sick = true AND group_id = $1"
+    GET_STUDENT_PASSWORD = 'SELECT password FROM students WHERE name = $1'
+    GET_TEACHER_PASSWORD = 'SELECT password FROM teachers WHERE name = $1'
 
     async def check_student(self, name):
         return await self.pool.fetchval(self.CHECK_STUDENT, name)
@@ -66,6 +68,12 @@ class DB():
     
     async def get_sicked(self, group_id):
         return await self.pool.fetch(self.GET_SICKED, group_id)
+    
+    async def get_student_password(self, name):
+        return await self.pool.fetchval(self.GET_STUDENT_PASSWORD, name)
+    
+    async def get_teacher_password(self, name):
+        return await self.pool.fetchval(self.GET_TEACHER_PASSWORD, name)
 
     async def insert(self, table, args):
         if (table == 'students'): command = self.INSERT_STUDENT

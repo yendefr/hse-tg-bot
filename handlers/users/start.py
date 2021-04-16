@@ -6,6 +6,7 @@ from keyboards.default import menu, role_menu, teacher_menu
 from handlers.users.menu import *
 from states.state import Auth
 from utils.db.db import DB
+from utils.mail.sendmail import SendMail
 
 from loader import dp
 
@@ -45,8 +46,18 @@ async def get_email(message: Message, state: FSMContext):
     name = data.get("name")
     email = message.text
     await state.update_data(email=email)
-    if (await db.check_student(name) != 0): await db.update_student_email(email, name)
-    if (await db.check_teacher(name) != 0): await db.update_teacher_email(email, name)
+    if (await db.check_student(name) != 0): 
+        await db.update_student_email(email, name)
+        password = await db.get_student_password(name)
+    if (await db.check_teacher(name) != 0):
+        await db.update_teacher_email(email, name)
+        password = await db.get_teacher_password(name)
+    
+    print('!!!', password, '!!!')
+
+    sender = SendMail(email)
+    await sender.sendmail(password)
+
     await message.answer('Введите код, пришедший вам на почту \(не забудте про папку Спам\)')
     
     await Auth.next()

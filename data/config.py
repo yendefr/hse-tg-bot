@@ -12,3 +12,5 @@ PG_USER = env.str('PG_USER')
 PG_PASSWORD = env.str('PG_PASSWORD')
 PG_HOST = env.str('PG_HOST')
 PG_DB = env.str('PG_DB')
+
+SMTP_PASSWORD = env.str('SMTP_PASSWORD')
