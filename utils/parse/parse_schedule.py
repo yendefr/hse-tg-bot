@@ -1,3 +1,5 @@
+# Данный скрипт запускается обособленно от основного кода бота
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
@@ -6,10 +8,10 @@ import psycopg2
 
 current_group = input('Введите номер группы: ')
 
-conn = psycopg2.connect(dbname='de97p5lt1upup3',
-                        user='opcpscelnfyyyr', 
-                        password='c1579b09580d8d44c761ec262f967d816505d1b5f5fbd2a9955ee27f4f5daf8d',
-                        host='ec2-54-74-14-109.eu-west-1.compute.amazonaws.com')
+conn = psycopg2.connect(dbname='',
+                        user='',
+                        password='',
+                        host='')
 cursor = conn.cursor()
 
 driver = webdriver.Chrome('utils/parse/chromedriver')
