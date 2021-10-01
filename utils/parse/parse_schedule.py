@@ -12,7 +12,7 @@ conn = psycopg2.connect(dbname='de97p5lt1upup3',
                         host='ec2-54-74-14-109.eu-west-1.compute.amazonaws.com')
 cursor = conn.cursor()
 
-driver = webdriver.Chrome('./chromedriver')
+driver = webdriver.Chrome('utils/parse/chromedriver')
 driver.get('https://ruz.hse.ru/ruz/main')
 sleep(1)
 group = driver.find_element_by_id('autocomplete-group')
@@ -50,7 +50,6 @@ for i, block in enumerate(blocks):
     print(subject)
     print(current_group)
     if (teacher_id != None): 
-        print('yea')
         print(cursor.execute("INSERT INTO schedule(teacher_id, class, time, subject, group_id) VALUES (%s, %s, %s, %s, %s)", (int(teacher_id), classroom, time, subject, current_group)))
     else: cursor.execute('INSERT INTO schedule (class, time, subject, group_id) VALUES (%s, %s, %s, %s)', (classroom, time, subject, current_group))
     conn.commit()
