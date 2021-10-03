@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 import random
 import string
-import typing
 
 from aiogram.dispatcher.filters import Command, Text
 from aiogram.dispatcher.storage import FSMContext
@@ -74,6 +73,8 @@ async def set_status(message: Message, state: FSMContext):
 
     await message.answer('Заявка отправленна на рассмотрение', reply_markup=menu)
 
+    await state.finish()
+
 
 @dp.message_handler(Text(equals='Получить расписание'))
 async def set_status(message: Message):
@@ -103,8 +104,16 @@ async def choice_status(callback_query: types.CallbackQuery, callback_data: dict
 
     if action == 'accept':
         await callback_query.message.edit_reply_markup(None)
-        await callback_query.answer('Введите срок действия статуса в днях')
-        await ApproveStatus.next()
+
+        if status == 'Здоров':
+            await db.update_is_sick_expires(int(student_id), False, None)
+            await callback_query.answer('Статус успешно обновлён')
+            await bot.send_message(student_id, f'Статус успешно обновлен')
+
+            await state.finish()
+        else:
+            await callback_query.answer('Введите срок действия статуса в днях')
+            await ApproveStatus.next()
     else:
         await callback_query.message.edit_reply_markup(None)
         await bot.send_message(student_id, 'Заявка отклонена')
@@ -124,10 +133,7 @@ async def set_status(message: Message, state: FSMContext):
     expire_date = datetime.today() + timedelta(days=expire)
 
     if status == 'Болен':
-        await db.update_is_sick(student_id, True, expire_date)
-        await bot.send_message(student_id, f'Статус успешно обновлен до ' + expire_date.strftime("%d\.%m"))
-    elif status == 'Здоров':
-        await db.update_is_sick(student_id, False, expire_date)
+        await db.update_is_sick_expires(student_id, True, expire_date)
         await bot.send_message(student_id, f'Статус успешно обновлен до ' + expire_date.strftime("%d\.%m"))
     else:
         await db.update_is_vaccinated(student_id, True, expire_date)
