@@ -14,7 +14,7 @@ conn = psycopg2.connect(dbname='',
                         host='')
 cursor = conn.cursor()
 
-driver = webdriver.Chrome('utils/parse/chromedriver')
+driver = webdriver.Chrome('./chromedriver')
 driver.get('https://ruz.hse.ru/ruz/main')
 sleep(1)
 group = driver.find_element_by_id('autocomplete-group')

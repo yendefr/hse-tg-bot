@@ -9,3 +9,13 @@ class Auth(StatesGroup):
 
 class Insert(StatesGroup):
     input = State()
+
+
+class ChangeStatus(StatesGroup):
+    status = State()
+    photo = State()
+
+
+class ApproveStatus(StatesGroup):
+    choice = State()
+    expires = State()

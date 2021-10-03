@@ -1,7 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 role_menu = ReplyKeyboardMarkup(
-    keyboard = [
+    keyboard=[
         [
             KeyboardButton(text='Преподаватель'),
             KeyboardButton(text='Студент'),
@@ -11,7 +11,7 @@ role_menu = ReplyKeyboardMarkup(
 )
 
 menu = ReplyKeyboardMarkup(
-    keyboard = [
+    keyboard=[
         [
             KeyboardButton(text='Указать статус'),
         ],
@@ -19,7 +19,7 @@ menu = ReplyKeyboardMarkup(
     resize_keyboard=True,
 )
 teacher_menu = ReplyKeyboardMarkup(
-    keyboard = [
+    keyboard=[
         [
             KeyboardButton(text='Получить расписание'),
         ],
@@ -27,10 +27,13 @@ teacher_menu = ReplyKeyboardMarkup(
     resize_keyboard=True,
 )
 status_menu = ReplyKeyboardMarkup(
-    keyboard = [
+    keyboard=[
         [
             KeyboardButton(text='Болен'),
             KeyboardButton(text='Здоров'),
+        ],
+        [
+            KeyboardButton(text='Вакцинирован'),
         ]
     ],
     resize_keyboard=True,

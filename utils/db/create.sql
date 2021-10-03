@@ -7,7 +7,9 @@ create table students
     password text not null,
     group_id text not null,
     is_sick boolean default false,
-    is_vaccinated boolean default false
+    is_vaccinated boolean default false,
+    sick_expires date null,
+    vaccinated_expires date null
 );
 
 create table teachers

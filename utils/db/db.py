@@ -20,9 +20,11 @@ class DB:
     INSERT_STUDENT = "INSERT INTO students(name, email, password, group_id) VALUES ($1, $2, $3, $4)"
     INSERT_TEACHER = "INSERT INTO teachers(name, email, password) VALUES ($1, $2, $3)"
     INSERT_SCHEDULE = "INSERT INTO schedule(teacher_id, class, time, subject, group_id) VALUES ($1, $2, $3, $4, $5)"
-    UPDATE_IS_SICK = "UPDATE students SET is_sick = $1 WHERE id = $2"
+    UPDATE_IS_SICK = "UPDATE students SET is_sick = $1, sick_expires = $3 WHERE id = $2"
+    UPDATE_IS_VACCINATED = "UPDATE students SET is_vaccinated = $1, vaccinated_expires = $3 WHERE id = $2"
 
     GET_SCHEDULE = "SELECT * FROM schedule WHERE teacher_id = $1"
+    GET_STUDENT_NAME_BY_ID = "SELECT name FROM students WHERE id = $1"
     GET_TEACHER_ID_BY_NAME = "SELECT id FROM teachers WHERE name = $1"
     GET_TEACHER_ID_BY_EMAIL = "SELECT id FROM teachers WHERE email = $1"
     GET_SICKED = "SELECT name FROM students WHERE is_sick = true AND group_id = $1"
@@ -56,11 +58,17 @@ class DB:
     async def update_teacher_email(self, email, name):
         return await self.pool.fetchval(self.UPDATE_TEACHER_EMAIL, email, name)
 
-    async def update_is_sick(self, user_id, is_sick):
-        return await self.pool.fetchval(self.UPDATE_IS_SICK, is_sick, user_id)
+    async def update_is_sick(self, user_id, is_sick, expires):
+        return await self.pool.fetchval(self.UPDATE_IS_SICK, is_sick, user_id, expires)
+
+    async def update_is_vaccinated(self, user_id, is_vaccinated, expires):
+        return await self.pool.fetchval(self.UPDATE_IS_VACCINATED, is_vaccinated, user_id, expires)
 
     async def update_schedule_id(self, new_id, old_id):
         return await self.pool.fetchval(self.UPDATE_SCHEDULE_ID, new_id, old_id)
+
+    async def get_student_name_by_id(self, student_id):
+        return await self.pool.fetchval(self.GET_STUDENT_NAME_BY_ID, student_id)
 
     async def get_teacher_id_by_name(self, name):
         return await self.pool.fetchval(self.GET_TEACHER_ID_BY_NAME, name)
